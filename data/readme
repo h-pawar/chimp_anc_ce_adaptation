@@ -4,6 +4,10 @@ Data
 # contains 3 columns: chromosome position 3P-CLR score
 # where position = physical position of the central SNP of the window
 # note this file contains 3P-CLR scores genome-wide (for all windows for which the statistic was calculated)
+# file used to plot Figure S12: Empirical distribution of 3P-CLR scores
 # head of file
 #15	6.18136e+07	693.253
 #12	1.10856e+08	679.884
+
+- aligned_sorted_genome_wide.3pclr.out.central.eastern.nigeria.epoAA.txt
+# 3P-CLR output (contains all columns)
