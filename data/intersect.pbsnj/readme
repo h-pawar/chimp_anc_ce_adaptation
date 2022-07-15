@@ -2,3 +2,18 @@ Data
 
 # intersect 3P-CLR candidate windows at 0.5% tail with PBSnj internal SNPs -> filter by top 20 highest PBSnj SNPs per windows
 # detailed in methods section: Overlap with all PBSnj SNPs in the internal branch
+
+# this file was searched for variants of relevance in target genes of interest, eg -
+
+#CD4 ENSPTRG00000004590
+awk '$9=="ENSPTRG00000004590"' highest.20.snps.per.window.99.5.cutoff.annotated.bed
+
+Aidas-MacBook-Pro:correctlysorted harvipawar$ awk '$9=="ENSPTRG00000004590"' highest.20.snps.per.window.99.5.cutoff.annotated.bed
+12	6963042	6963043	658	0.524153969442209	12	6963042	6963043	ENSPTRG00000004590	splice_region_variant,synonymous_variant	245	51	17	A	gcA/gcG	-	CD4	VGNC
+12	6974186	6974187	658	0.657100520215825	12	6974186	6974187	ENSPTRG00000004590	intron_variant	-	-	-	-	-	-	1	CD4	VGNC
+12	6975062	6975063	658	0.736179143068102	12	6975062	6975063	ENSPTRG00000004590	intron_variant	-	-	-	-	-	-	1	CD4	VGNC
+12	6977526	6977527	658	0.418180151933768	12	6977526	6977527	ENSPTRG00000004590	intron_variant	-	-	-	-	-	-	1	CD4	VGNC
+12	6978231	6978232	658	0.634853507470726	12	6978231	6978232	ENSPTRG00000004590	missense_variant	471	277	93	T/P	Acc/Ccc	-	1	CD4	VGNC
+12	6983751	6983752	658	0.499193723157863	12	6983751	6983752	ENSPTRG00000004590	downstream_gene_variant	-	-	-	-	-	-	187	1	CD4
+12	6984372	6984373	658	0.439393897502977	12	6984372	6984373	ENSPTRG00000004590	downstream_gene_variant	-	-	-	-	-	-	808	1	CD4
+12	6984387	6984388	658	0.439393897502977	12	6984387	6984388	ENSPTRG00000004590	downstream_gene_variant	-	-	-	-	-	-	823	1	CD4
