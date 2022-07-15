@@ -1,5 +1,5 @@
 Data
 
 Note outputs from performing gene set enrichment of the candidate windows are given in supplementary table xlsx.
-Here example of correction for number of lineages & heatmap plotting
+Here example of correction for number of lineages & heatmap plotting - used to generate Figure 3  Enrichment of HIV/SIV-related and VIP categories in 3P-CLR candidate genes for the central-eastern ancestor & Figure S4  Enrichment of gene ontology (GO) categories across candidate genes at different 3P-CLR quantiles in the central-eastern ancestor.
 
