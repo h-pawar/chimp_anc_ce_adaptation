@@ -1,1 +1,9 @@
 Data
+
+- highest.20.snps.per.window.99.5.cutoff.annotated.bed
+# used to plot Figure S14: Functional annotation of 20 highest PBSnj SNPs per window at the 0.5% threshold using VEP.
+# contains VEP annotation
+
+-  highest.20.snps.per.window.99.5.cutoff.regDBannotated.bed
+# used to plot Figure S15: Functional annotation of 20 highest PBSnj SNPs per window at the 0.5% threshold using regulomeDB.
+# contains VEP + regulomeDB annotation
