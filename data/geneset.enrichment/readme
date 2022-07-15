@@ -1,11 +1,12 @@
 Data
 
 Outputs from performing gene set enrichment of the candidate windows are given in supplementary table xlsx.
-R script shows correction for number of lineages & heatmap plotting for gene set enrichment results of the central-eastern ancestor.
+
+R script here shows steps to correct for number of lineages & heatmap plotting for gene set enrichment results of the central-eastern ancestor.
 This script was used to generate Figure 3  Enrichment of HIV/SIV-related and VIP categories in 3P-CLR candidate genes for the central-eastern ancestor 
 & Figure S4  Enrichment of gene ontology (GO) categories across candidate genes at different 3P-CLR quantiles in the central-eastern ancestor.
 
-Note the correction for number of lineages
+Note the correction for number of lineage swas also performed in the generation of Figures S6 - S9 - reading in the FDR_enrich values from the xlsx file & applying the below function:
 
 proc_padj<-function(x){
 m = as.matrix(fdr_enrich[x,])
@@ -24,4 +25,4 @@ hold.p[[i]]<-proc_padj(i)
 
 BH_df<-data.frame(matrix(unlist(hold.p), nrow=length(hold.p), byrow=TRUE),stringsAsFactors=FALSE)
 
-was also performed for Figures S6 - S9 (reading in the FDR_enrich values).
+
