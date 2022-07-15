@@ -1,1 +1,4 @@
 Data
+
+# intersect 3P-CLR candidate windows at 0.5% tail with PBSnj internal SNPs -> filter by top 20 highest PBSnj SNPs per windows
+# detailed in methods section: Overlap with all PBSnj SNPs in the internal branch
