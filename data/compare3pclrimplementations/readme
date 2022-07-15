@@ -1,1 +1,23 @@
 Data
+
+Both files used to generate Figure S10: Correlation between the 3P-CLR values with the original and extended code.
+To compare the 2 implementations of 3pclr source code (original by Racimo, genome-wide approach) vs (split chromosome approach - modified code by JS).
+
+# plotting as follows -
+full_genome_wide<-fread("fullimpl_genome_wide_3pclr_output.txt")
+split_genome_wide<-fread("splitimpl_genome_wide_3pclr_output.txt")
+
+
+#cor.test(x=full_genome_wide$V3, y=split_genome_wide$V3, method = 'spearman')
+##gives
+#   Spearman's rank correlation rho
+#data:  full_genome_wide$V3 and split_genome_wide$V3
+#S = 6.2431e+15, p-value < 2.2e-16
+#alternative hypothesis: true rho is not equal to 0
+#sample estimates:
+#  rho 
+#0.456491 
+
+test<-as.data.frame(cbind(full_genome_wide$V3,split_genome_wide$V3))
+colnames(test)<-c("original","amended")
+ggplot(test, aes(x=original, y=amended)) +     geom_point() +  labs(x="Original source code - likelihood scores", y = "Modified source code - likelihood scores")   + theme_classic() + theme(text = element_text(size = 15))  + theme(axis.title = element_text(size = 15)) 
