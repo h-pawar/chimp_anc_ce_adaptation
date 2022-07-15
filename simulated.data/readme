@@ -5,6 +5,7 @@ To generate Figure S1: Power of 3P-CLR in the ancestral central-eastern populati
 - merged.neutral.s0.1.likelihoodscores.1000runs.txt
 # contains 3P-CLR scores from the central window of each simulation run in column 1, where each row corresponds to an independent simulation run, in total data from 1000 neutral and 1000 s_0.1 runs was used. 
 # Column 2 of input file lists each simulation run's corresponding identifier - ie whether the 3P-CLR score listed corresponds to a neutral or selection simulation.   
+# simulations generated using slim
 
 - merged.neutral.s0.05.likelihoodscores.1000runs.txt
 # equivalent format but for selection coefficient s=0.05
