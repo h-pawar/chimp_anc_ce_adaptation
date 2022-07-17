@@ -29,6 +29,11 @@ BH_df<-data.frame(matrix(unlist(hold.p), nrow=length(hold.p), byrow=TRUE),string
 - chimp.genes.human.names.homologs.and.amb.homology_mar.17.gtf
 # annotation file for gene set enrichment analyses
 
+- final_snp_total_central_eastern_nigeria_3pclr_out_genome_wide.txt
+# background snp file for the ancestor (central snps of all 3P-CLR windows)
+
+# where the candidate snp files are those 
+
 # example command to run gowinda on candidates from the central-eastern ancestor 
 java -Xmx6g -jar ${gowinda}/Gowinda-1.12.jar \
 --snp-file ${input}/final_snp_total_central_eastern_nigeria_3pclr_out_genome_wide.txt \
