@@ -1,7 +1,6 @@
 Data
 
 To generate Figure S1: Power of 3P-CLR in the ancestral central-eastern population. Each ROC curve was generated from 1000 neutral simulations and 1000 selection simulations for each s (s=0.05, 0.1).
-& to generate Figure S11
 
 # 2 .txt files = 3P-CLR likelihood scores (3P-CLR calculated on simulated data) with identifier (as to whether score corresponds to a neutral simulation, or a simulation under positive selection)
 
@@ -18,7 +17,7 @@ To generate Figure S1: Power of 3P-CLR in the ancestral central-eastern populati
 
 
 
-# code to generate Figure S11: Distribution of 3P-CLR scores for data simulated under neutrality (A) and positive selection with selection coefficients of 0.05 (B) and 0.1 (C), 1000 replicates were generated in each case.
+Code to generate Figure S11: Distribution of 3P-CLR scores for data simulated under neutrality (A) and positive selection with selection coefficients of 0.05 (B) and 0.1 (C), 1000 replicates were generated in each case.
 
 sim_0.1<-fread("merged.neutral.s0.1.likelihoodscores.1000runs.txt")
 sim_0.05<-fread("merged.neutral.s0.05.likelihoodscores.1000runs.txt")
