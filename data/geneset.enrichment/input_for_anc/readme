@@ -1,6 +1,9 @@
 Data
 
 Candidate files for testing gene set enrichment at each of the 3 quantiles
+# 0.5% tail: final_snp_subset_central_eastern_3pclr_out_genome_wide_0.005percent.txt
+# 0.1% tail: final_snp_subset_central_eastern_3pclr_out_genome_wide_0.001percent.txt
+# 0.05% tail: final_snp_subset_central_eastern_3pclr_out_genome_wide_0.0005percent.txt
 
 - final_snp_total_central_eastern_nigeria_3pclr_out_genome_wide.txt
 Background file (central snps of all 3P-CLR windows)
