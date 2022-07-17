@@ -3,4 +3,4 @@ Data
 Candidate files for testing gene set enrichment at each of the 3 quantiles
 
 - final_snp_total_central_eastern_nigeria_3pclr_out_genome_wide.txt
-Background file
+Background file (central snps of all 3P-CLR windows)
