@@ -1,1 +1,7 @@
 Data
+
+# background: internal.daughter.all.genes.midpoint.uniq.txt
+# candidate files (where A is 0.5% tail) :
+# A+C internal.central.min.p.tail.midpoint.length.corrected.uniq.txt
+# A+E internal.eastern.min.p.tail.midpoint.length.corrected.uniq.txt
+# A+C+E internal.central.eastern.min.p.tail.midpoint.length.corrected.uniq.txt
