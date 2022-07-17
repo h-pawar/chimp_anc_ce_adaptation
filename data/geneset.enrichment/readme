@@ -28,3 +28,19 @@ BH_df<-data.frame(matrix(unlist(hold.p), nrow=length(hold.p), byrow=TRUE),string
 
 - chimp.genes.human.names.homologs.and.amb.homology_mar.17.gtf
 # annotation file for gene set enrichment analyses
+
+# example command to run gowinda on candidates from the central-eastern ancestor 
+java -Xmx6g -jar ${gowinda}/Gowinda-1.12.jar \
+--snp-file ${input}/final_snp_total_central_eastern_nigeria_3pclr_out_genome_wide.txt \
+--candidate-snp-file ${input}/final_snp_subset_central_eastern_3pclr_out_genome_wide_0.0005percent.txt \
+--gene-set-file ${genesets}/KEGG.biosystems.gene.set_and.all.txt \
+--annotation-file ${genesets}/chimp.genes.human.names.homologs.and.amb.homology_mar.17.gtf \
+--simulations 50000 \
+--min-significance 1 \
+--gene-definition updownstream2000 \
+--output-file ${output}/KEGG.biosystems_geneset_gowindaoutput_snp_subset_central_eastern_3pclr_out_genome_wide_0.0005percent.txt \
+--mode gene \
+--min-genes 3 \
+--threads 4 
+# We use the entire gene +- 2kb as our gene definition.
+# gowinda is run for 50000 simulations, gene is defined as updownstream2000, in gene mode, requires a minimum of 3 genes per category, min significance of 1, & 4 threads
