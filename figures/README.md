@@ -24,13 +24,9 @@
 
 - The VCF used as input is availible from de Manuel et al. (2016) and not included in this directory.
 
-### pan_troglodytes_ancestor_CHIMP2.1.4_e86/
-
-- Contains EPO alignment data (downloaded and formatted in Pawar_et.al._candidate_vcfs.Rmd).
-
 ### window_subset_0.5percent.txt, window_subset_0.1percent.txt and window_subset_0.05percent.txt
 
-- Coordinates of 3P-CLR candidate windows at each empirical threshold (0.5%. 0.1%, 0.05%).
+- Coordinates of 3P-CLR candidate windows at each empirical threshold (0.5%. 0.1% and 0.05% respectively).
 
 ### *.rds
 
