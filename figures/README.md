@@ -22,9 +22,7 @@
 
 - Contains the input for the scripts.
 
-### Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess.vcf.gz
-
-- VCF from de Manuel et al. (2016).
+- The VCF used as input is availible from de Manuel et al. (2016) and not included in this directory.
 
 ### pan_troglodytes_ancestor_CHIMP2.1.4_e86/
 
@@ -37,10 +35,6 @@
 ### *.rds
 
 - All .rds files are input for Pawar_et.al._figure4-top.R and Pawar_et.al._figure4-bottom.R
-
-## data/
-
-- This contains reformatted data from the input/ directory output from Pawar_et.al._candidate_vcfs.Rmd which is the input for Pawar_et.al._figures_2_S2_S3_S4.ipynb.
 
 ## output/
 
