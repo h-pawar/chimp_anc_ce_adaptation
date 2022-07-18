@@ -1,4 +1,4 @@
-# Pawar_et.al._code-HO/
+# figures/
 
 - This directory contains all the code used to make the following figures in Pawar et al. 2022: 2, 4, S2, S3, S4.
 
