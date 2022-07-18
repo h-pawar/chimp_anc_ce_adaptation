@@ -1,0 +1,150 @@
+---
+title: "Candidate VCFs"
+author: "Harrison Ostridge"
+date: "10/03/2021"
+output: html_document
+---
+
+The purpose of this script is to add EPO ancestral alleles to th VCF and make separate VCFs for 3P-CLR windows at three empirical p value thresholds; 0.5%, 0.1% and 0.05%. These VCFs can then be converted to Zarr format and used to plot the SFS of candidates with 'scripts/Pawar_et.al._figures_2_S2_S3_S4.ipynb'.
+
+```{r setup, include=FALSE}
+# R
+
+rm(list=ls())
+knitr::opts_knit$set(root.dir = '~/OneDrive - University College London/Projects/Internal_branch_enrichment/Pawar_et.al._code-HO/') 
+
+library(data.table)
+```
+
+## Index VCF
+
+The VCF is from de Manuel et al. (2016).
+
+```{bash eval=FALSE}
+# Bash
+
+## Index
+tabix -p vcf input/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess.vcf.gz
+```
+
+## Polarise Alleles
+
+### Download EPO aligment
+
+The VCF is aligned to pantro2.1.4.
+
+Can access the ensemble FTP using the link (http://ftp.ensembl.org/pub/) from this page https://www.ensembl.org/info/data/ftp/index.html.
+
+I download from the release 90 as this is is the latest release where pantro2.1.4 is used.
+
+```{bash eval=FALSE}
+# Bash
+
+# Only need to run once (takes a while)
+## tar file
+curl -o input/pan_troglodytes_ancestor_CHIMP2.1.4_e86.tar.gz ftp://ftp.ensembl.org/pub/release-90/fasta/ancestral_alleles/pan_troglodytes_ancestor_CHIMP2.1.4_e86.tar.gz
+### Uncompress file
+tar -xvjf input/pan_troglodytes_ancestor_CHIMP2.1.4_e86.tar.gz
+### Move to correct directory 
+mv pan_troglodytes_ancestor_CHIMP2.1.4_e86 input/pan_troglodytes_ancestor_CHIMP2.1.4_e86
+```
+
+#### Change Fasta Headers
+
+The headers need to be '1', '2A', '2B' ect. for BCFtools to recognise them.
+
+```{bash eval=FALSE}
+# Bash
+
+# Change fasta headers to simply chr1, chr2A, chr2B ect.
+for CHR in 1 2A 2B {3..22} X Y MT
+  do
+  # NB: the "''" after "seed -i" is required for mac
+  sed -i '' "s/^>.*$/>${CHR}/g" input/pan_troglodytes_ancestor_CHIMP2.1.4_e86/pan_troglodytes_ancestor_${CHR}.fa
+  done
+```
+
+#### Combine Fastas for Each Chromosome into One
+
+```{bash eval=FALSE}
+# Bash
+
+# Combine fastas for each chromosome
+cat input/pan_troglodytes_ancestor_CHIMP2.1.4_e86/pan_troglodytes_ancestor_?.fa input/pan_troglodytes_ancestor_CHIMP2.1.4_e86/pan_troglodytes_ancestor_??.fa > input/pan_troglodytes_ancestor_CHIMP2.1.4_e86/pan_troglodytes_ancestor_fullgenome.fa
+# Index the file
+samtools faidx input/pan_troglodytes_ancestor_CHIMP2.1.4_e86/pan_troglodytes_ancestor_fullgenome.fa
+```
+
+### BCFtools
+
+The `fill-from-fasta` plugin allows you to add information to the INFO column of the VCF according to a fasta. Here I add the ancestral allele from the EPO alignment to a new variable called 'AA'. This follows the example given when `bcftools +fill-from-fasta -h` is run. This also unzips the file and so I write it to external storage ('My_Passport_for_Mac-2TB') to make sure there is space. I then compress it and move it to my Mac.
+
+```{bash eval=FALSE}
+# Bash
+
+# Temporary directory with plenty of storage space
+TMP_DIR=~/../../Volumes/My_Passport_for_Mac-2TB/april-2022-work
+
+# Add ancestral alleles to INFO
+echo '##INFO=<ID=AA,Number=1,Type=String,Description="Ancestral allele">' > aa.hdr
+bcftools +fill-from-fasta \
+input/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess.vcf.gz -- \
+-c AA \
+-f input/pan_troglodytes_ancestor_CHIMP2.1.4_e86/pan_troglodytes_ancestor_fullgenome.fa \
+-h aa.hdr > ${TMP_DIR}/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess_EPO_AA_90.vcf
+
+# Compress VCF - required for BCFtools
+bgzip ${TMP_DIR}/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess_EPO_AA_90.vcf
+## Copy to Mac
+cp ${TMP_DIR}/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess_EPO_AA_90.vcf.gz data/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess_EPO_AA_90.vcf.gz
+# Index VCF
+tabix -p vcf data/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess_EPO_AA_90.vcf.gz
+```
+
+## Make Tail VCFs
+
+### Format tail BED files
+
+```{r}
+# R
+
+# Read in files
+## You'll notice I have to change the order of the columns to make the gowinda output into a bed format
+bed=list()
+for(tail in c('0.5','0.1','0.05')){
+  bed[[tail]]=fread(paste0("input/window_subset_", tail, "percent.txt"))[,c('V1', 'V3', 'V4')]
+  # Order (makes BCFtools faster)
+  bed[[tail]]=bed[[tail]][order(bed[[tail]]$V1, bed[[tail]]$V3)]
+  # Write BED files for full windows
+  write.table(bed[[tail]][,c('V1', 'V3', 'V4')], paste0("data/window_subset_", tail, "percent.bed"), 
+            sep="\t", row.names=FALSE, col.names=FALSE, quote=FALSE)
+}
+```
+
+### BCFtools View
+
+Use bed file with window coordinates for each tail to extract the relevant SNPs from the main VCF and make new VCFs. This may seem like an odd approach but it massively speeds things up when running the python script if I can have separate zarr 'files' for each SNP category.
+
+```{bash eval=FALSE}
+# Bash
+
+# Tails
+rm data/window_subset_0.5percent.vcf.gz
+for TAIL in 0.5 0.1 0.05
+  do
+  ## If you have already made the 0.5% tail VCF then subset from this as all other tails are nested within it and it speeds things up massively
+  ### If not then just use the main VCF
+  if test -f "data/window_subset_0.5percent.vcf.gz"; then
+    BIG_VCF="data/window_subset_0.5percent.vcf.gz"
+  else
+    BIG_VCF="data/Clean_Callable_Pan_troglodytes_ALL_Concat_1M_HWE_gls_Hetexcess_EPO_AA_90.vcf.gz"
+  fi
+  bcftools view \
+  --regions-file data/window_subset_${TAIL}percent.bed \
+  ${BIG_VCF} \
+  > data/window_subset_${TAIL}percent.vcf
+  ### Compress and index
+  bgzip -f data/window_subset_${TAIL}percent.vcf
+  tabix -p vcf data/window_subset_${TAIL}percent.vcf.gz
+  done
+```
