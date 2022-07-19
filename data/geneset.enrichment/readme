@@ -1,6 +1,6 @@
 Data
 
-Outputs from performing gene set enrichment of the candidate windows are given in supplementary table xlsx.
+Outputs from performing gene set enrichment of the candidate windows are given in supplementary table S1_Enrichment_tables.xlsx
 
 R script here shows steps to correct for number of lineages & heatmap plotting for gene set enrichment results of the central-eastern ancestor.
 This script was used to generate Figure 3  Enrichment of HIV/SIV-related and VIP categories in 3P-CLR candidate genes for the central-eastern ancestor 
