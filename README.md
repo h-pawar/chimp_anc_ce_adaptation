@@ -23,3 +23,6 @@ chimp_anc_ce_adaptation/data/compare3pclrimplementations/: to generate Figure S1
 chimp_anc_ce_adaptation/data/functional.annotation/ : to generate Fig S14 & S15
 
 #-------------------------------------------------------------------------------------------------------------------
+
+NB: so me files are tracked with git lfs:
+[https://git-lfs.github.com/]
