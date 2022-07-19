@@ -1,1 +1,8 @@
 Scripts
+
+- 3pclr_runscript.sh
+- neutral_3pclr_runscript_10finalreps.sh # to generate an additional 10 neutral reps
+# apply 3P-CLR to neutral simulated data
+
+- 3pclr_smaller_s_selection_runscript.sh
+# apply 3P-CLR to positive selection simulated data
