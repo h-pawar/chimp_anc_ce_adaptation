@@ -24,5 +24,13 @@ chimp_anc_ce_adaptation/data/functional.annotation/ : to generate Fig S14 & S15
 
 #-------------------------------------------------------------------------------------------------------------------
 
+chimp_anc_ce_adaptation/data/set_perm/ : set_perm files
+
+#-------------------------------------------------------------------------------------------------------------------
+
 NB: some files are tracked with git lfs:
 [https://git-lfs.github.com/]
+
+#-------------------------------------------------------------------------------------------------------------------
+
+Note - JMS extended 3P-CLR code to allow the method to analyse 5kb segments of each chromosome - available in https://github.com/joshuamschmidt/3P-CLR 
