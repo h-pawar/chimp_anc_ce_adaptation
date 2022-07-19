@@ -1,5 +1,8 @@
 Scripts
 
+Simulations workflow: 					
+1. coalescent_trees (msprime) -> 2. forward_trees (SLiM) -> 3. mutations_out (msprime)
+
 # Neutral simulations
 - chimp_neutralevolution_runscript.sh
 # simulation under neutral evolution
