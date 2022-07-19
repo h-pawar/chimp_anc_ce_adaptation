@@ -1,0 +1,308 @@
+// selection 
+// update script to add additional else if statement in the fixation loop
+// maybe in final gen of simulation cat the freq of m2 in each pop to log?
+
+initialize() {
+    // profiling recommended we set this
+    initializeSLiMOptions(mutationRuns=1);
+	// 1. initialise treeseq
+    initializeTreeSeq();
+	//initializeTreeSeq(simplificationRatio = INF);
+	// 2. initialise mt rate as 0 - b/c neutral simn, neutral mts overlaid after
+	initializeMutationRate(0);
+	initializeMutationType("m1", 0.5, "f", 0.0);
+	// introduce beneficial mt, dominance coeff 1, seln coeff passed to slim from command line, before initialisation callback - follow manual pg 208
+	initializeMutationType("m2", 1.0, "f", selcoeff);
+	// turn off substitution for beneficial mt
+	m2.convertToSubstitution = F;
+	initializeGenomicElementType("g1", m1, 1.0); 
+	// in 10.1 & in 16.3 this is m1 - adding the neutral mts stochastically [b/c need to explicitly introduce the beneficial mt later]  
+	//initializeGenomicElement(g1, 0, 4999999);
+    initializeGenomicElement(g1, 0, 1199999); //JS: lets make it only 1.2Mb. 
+    // enough for power analysis as fernando only tested 1cM windows max.
+	initializeRecombinationRate(0.96e-8);   
+}
+// subspecies split 482,625 years ago
+1 late() {
+	cat("Random seed = " + getSeed() + "\n"); 
+	cat("defined variables:" + indir + "= in directory,\n" + outdir + "= out directory,\n" + simID + "= simID,\n" + selcoeff + "= selcoeff,\n" + infile + "= infile.\n" );
+	sim_in_file=infile;
+	// read in .trees file from ms prime 
+    sim.readFromPopulationFile(infile); 
+    sim_id_string="Running sweep simulation\nTreeSeq file = "+sim_in_file+"\nSelection coefficient = "+selcoeff+"\n";
+
+// error check sim starting conditions
+    pop_size_string="bonobo ind count = "+p0.individualCount+" and chimp ancestor ind count = "+p1.individualCount+"\n";
+	// check size of all chimp ancestor
+ 	if (p0.individualCount!=2995 | p1.individualCount != 16692) {
+        pop_size_string="input TreeSeq pop sizes are wrong. Check that bonobo = 2995 and chimp ancestor = 16692\n"+pop_size_string;
+        cat(sim_id_string+pop_size_string);
+        sim.simulationFinished();
+    }
+    else {pop_size_string=pop_size_string+"simulation initalised with correct pop sizes\n";
+        cat(sim_id_string+pop_size_string);
+    }
+   
+	sim.addSubpopSplit("p4", 872, p1);
+	// so p1 = 16692-872= 15820 **
+	
+	// F. Migration rates from 480,625y back [so starting from 482,625 to 480,625ya] 19225gen
+	// 64032-19225=44807
+	// 44807 + burnin = 191917
+
+	p0.setMigrationRates( c(p1, p4), c(4.43346e-7, 5.10877e-8));
+	p1.setMigrationRates( c(p0, p4), c(1.80856e-7, 4.84639e-6));
+	p4.setMigrationRates( c(p0, p1), c(2.19518e-7, 1.92752e-7));
+	
+	// R from 106,325 yrs back to 482,625ya set common ancestor CE = 87,316 **
+	p1.setSubpopulationSize(87316);
+}
+
+// G. 191917 change migration rate forward from this pt until 170,600ya. 
+// 170600/25 = 6824
+// 64032-6824=57208 + burnin = 204318
+// 11. from 170600ya back these migration rates 
+// b) 191917 - 191837 = 80 gen [changing times b/c no longer running burn-in forwards in time]      
+80  {
+	// issue here migration from western when hasn't yet been created - use ancestral NC-W population
+	p0.setMigrationRates(p4, 1.5077e-7);
+	p1.setMigrationRates( c(p0, p4), c(2.54364e-7, 5.08026e-6));
+	p4.setMigrationRates( c(p0, p1), c(2.89386e-7, 3.26332e-5));
+}
+// same w this last one
+
+// c)191917 = 80
+// H. from 475,075ya back NC = 27,943 (b/n 480,625-475,075ya)
+80 {
+	p4.setSubpopulationSize(27943);
+}
+
+// I. from 473,075ya back NC = 306 (b/n 475,075ya to 473,075)
+// 475075/25 = 19003
+// 64032-19003 = 45029 + burnin = 192139
+// d) 192139-191837=302
+	// ie this is NC size at 475, 075ya
+302 {
+	p4.setSubpopulationSize(306);
+}
+
+// size of NC from 1000ya to 473,075ya should be 12364
+	// ie NC= 306 b/n 475,075ya to 473,075ya
+	// 473,075ya = 382 gen
+382 {
+	//  set NC size from 1000yrs back 
+	p4.setSubpopulationSize(12364);
+}
+
+1000 { cat("simulation still running, current generation=" + sim.generation + "\n"); 
+   }
+
+// J from 421,550 years back bonobo = 2,995
+// next bonobo size change starts from here
+// 421550/25 =16862
+// 64032 - 16862 = 47170 + burn in = 194280
+// d) 2443
+2443 {
+	p0.setSubpopulationSize(1584);
+}
+
+// K from 419,550y back bonobo = 1,584
+// 419550 ya set bonobo size (b/n 419550yrs & 421550ya size needs to get to 1584 
+// ie until 64032- 16782 = 47250 + burnin = 194360 - next bonobo size change starts here (W) **
+// W, where bonobo size = 18329, from 1000yrs back
+// e)2523
+2523 {
+	p0.setSubpopulationSize(18329);
+}
+
+5000 { cat("simulation still running, current generation=" + sim.generation + "\n"); 
+   }
+
+// 1. introduce beneficial mt 1/2 way b/n time of NC/W split from C/E & time of CE split
+// ie at gen 7526 
+7526 late(){
+	// a. save state of simulation before sweep mt is introduced
+	// sim.treeSeqOutput("/tmp/slim/gen_before_mt_" + simID + ".trees"); //JS: good idea to be more explicit when naming things... e.g. gen.before.selective.mutation + simID etc....
+	// change htis to save in outdir slim_trees
+	sim.treeSeqOutput(outdir + "gen_before_mt_" + simID + "_" + selcoeff + ".trees");
+    // b. introduce beneficial mt in centre of 5cM window, ie at 2,499,999bp in slim(starts from 0)
+	target = sample(p1.genomes, 1);
+	target.addNewDrawnMutation(m2, 599999); // JS chnaged to 1.2Mb locus.
+	// 1/2 way - at site 600,000 
+}
+
+
+// add context-dependent fitness callback - so beneficial mt only beneficial in ce
+	fitness(m2, p0) { return 1.0; }
+	fitness(m2, p4) { return 1.0; }
+	fitness(m2, p5) { return 1.0; } //specifying p5 before its been created - p5 having higher relative fitness at gen 15,000 - amend later
+
+// need to amend this section - shoudl work	 	
+// specify when it stops segregating in the p1 popn, while still segregating in the simulation as a whole
+// make sweep conditional on fixation - only in p1 
+7527: 15051 late(){	 
+	// check freq of m2 in p1 
+	counts_p1 = p1.genomes.countOfMutationsOfType(m2);
+ 	freq_p1 = mean(asInteger(counts_p1 > 0));
+	
+	// if fixed do this 
+	if(freq_p1 == 1.0) { cat(simID + ": FIXED" + "generation of fixation="+ sim.generation + "\n");
+	
+	// check the p0, p4 counts once, as a further condition at if p1==1 (p1 fixation).
+	counts_p0 = p0.genomes.countOfMutationsOfType(m2);
+ 	freq_p0 = mean(asInteger(counts_p0 > 0));
+ 	counts_p4 = p4.genomes.countOfMutationsOfType(m2);
+ 	freq_p4 = mean(asInteger(counts_p4 > 0));
+	cat(freq_p0 + "=bonobo\n" + freq_p4 + "=ancestral_nigeria\n");
+	//cat(freq_p1); unnecessary b/c if fixed will be 1
+	sim.deregisterScriptBlock(self); // if mutation is fixed, stop checking!
+		 }
+	
+	else if(freq_p1 == 0.0) { cat(simID + ": LOST at generation="+ sim.generation + "- RESTARTING\n"); 
+	// go back to generation of saved state
+         sim.readFromPopulationFile(outdir + "gen_before_mt_" + simID + "_" + selcoeff+ ".trees");
+			// start a newly seeded run by incrementing the previous seed
+			setSeed(getSeed() + 1);
+			// re-introduce the sweep mutation
+			target = sample(p1.genomes, 1);
+			target.addNewDrawnMutation(m2, 599999);
+		
+		}
+
+	else if (sim.generation==15051) {
+	if (freq_p1 != 1.0) {
+	cat(simID + ": STILL SEGREGATING at generation = " + sim.generation + "- RESTARTING\n");
+	// go back to generation of saved state
+	sim.readFromPopulationFile(outdir + "gen_before_mt_" + simID + "_" + selcoeff+ ".trees");
+	// start a newly seeded run by incrementing the previous seed
+	setSeed(getSeed() + 1);
+	// re-introduce the sweep mutation
+	target = sample(p1.genomes, 1);
+	target.addNewDrawnMutation(m2, 599999); 
+		}
+	}
+	
+	}
+    
+
+// should be 267,500ya 
+// L. 267,500ya W-NC split - split off p5 W from p4 NC
+// = 10700 generations ago : 64032 - 10700 = 53332 + burnin = 200442
+// q does this change any of the migrations ie before event 14
+// f) 8605
+8605 {
+	sim.addSubpopSplit("p5", 1950, p4);
+	p4.setSubpopulationSize(12364);
+} 
+
+fitness(m2, p5) { return 1.0; } //m2 neutral in p5 - may need to specify this here - currently calling this twice
+	
+// N. W = 1439 from 214,175y -  211,950 ** = 202575 
+//h) 10738
+10738 {
+	p5.setSubpopulationSize(1223); //JS: 1223
+}
+
+// W 211950/25 = 8478
+// 64032 - 8478 = 55554 + burnin = 202,664
+// setting W size from 1000yrs back in time **
+//i) 10827
+10827 {
+	p5.setSubpopulationSize(9133); 
+} //JS: p5 is reduced to 85%. 9133
+
+
+// Q. From 106,325 yrs back set migration rates ie starting from 116,550ya 
+// 116550/25= 4662
+// 64032 - 4662 = 59370 + burnin = 206480
+//l) 14643
+14643 {
+	p0.setMigrationRates( c(p1, p4), c(4.43346e-7, 5.10877e-8) );
+	p1.setMigrationRates( c(p0, p4), c(1.80856e-7, 4.84639e-6) );
+	p4.setMigrationRates( c(p0, p1), c(2.19518e-7, 1.92752e-7) ); 
+}
+
+
+// S. 106325ya CE split
+// 106325/25 =4253
+// 64032-4253= 59779 + burnin = 206889
+//m) 15052
+15052 { sim.addSubpopSplit("p2", 403, p1); //JS: right
+	
+	// T 104,325yrs back set C, E sizes [from 106325-] **
+	// bottleneck after CE split
+	p1.setSubpopulationSize(1926); //JS: right
+	
+	// U from 42,025 years back set migration rates, ie starting from 106,325ya 
+	
+	p0.setMigrationRates( c(p1, p4), c(1.11818e-6, 5.10877e-8) ); //JS: right
+	p2.setMigrationRates( c(p1, p4), c(4.54549e-5, 2.82221e-5) );
+	p1.setMigrationRates( c(p0, p2, p4), c(8.52232e-7, 5.05725e-5, 1.28501e-5) );
+	p4.setMigrationRates( c(p0, p2, p1), c(2.19518e-7, 1.52587e-5, 6.92703e-5) );
+}
+
+// W from 1000yrs back set popn sizes: 
+// for CE set sizes from 104,325 yrs-1000yrs **
+// 104325/25 = 4173
+// 64032-4173= 59859 + burnin = 206,969
+//n)15132
+15132 {
+	p2.setSubpopulationSize(11610); //JS: right	
+	p1.setSubpopulationSize(36691);
+}
+
+
+// V from 20,875yrs back set migration rates , ie start from 42,025 
+//42025/25= 1681
+// 64032-1681 = 62351 + burnin = 209461
+// o)17624
+17624 {
+	p2.setMigrationRates( c(p1,p4), c(4.54549e-5, 2.82221e-5) ); // into e from c + nc
+	p1.setMigrationRates( c(p2,p4), c(5.05725e-5, 1.28501e-5) );
+	p4.setMigrationRates( c(p2,p1), c(1.52597e-5, 6.92703e-5) );
+}
+
+// X migration rates from present time back - start from 20,875
+// 20875/25 = 835
+// 64032-835= 63197 + burnin = 210,307
+// p)18470
+18470 {
+	p2.setMigrationRates(p1, 4.54549e-5);
+	p1.setMigrationRates(p2, 5.05725e-5);
+}
+
+// Y from present back set population sizes of all 5 - starting from 1000yrs
+// 1000/25 = 40
+// 64032-40 = 63992 + burnin = 211,102
+// q)19265
+19265 {
+	p0.setSubpopulationSize(742);
+	p2.setSubpopulationSize(3181);
+	p1.setSubpopulationSize(3092);
+	p4.setSubpopulationSize(386);
+	p5.setSubpopulationSize(811); 
+}
+
+// Z sampling in present
+//  end of gen 64032 + (burn in time) = present 
+// 64032 + 147110 = 211,142
+//r) 211,142 - 191837 (from prior 10N burn-in)= 19305
+19305 late() {
+	
+	counts_p0 = p0.genomes.countOfMutationsOfType(m2);
+ 	freq_p0 = mean(asInteger(counts_p0 > 0));
+	counts_p1 = p1.genomes.countOfMutationsOfType(m2);
+ 	freq_p1 = mean(asInteger(counts_p1 > 0));
+ 	counts_p2 = p2.genomes.countOfMutationsOfType(m2);
+ 	freq_p2 = mean(asInteger(counts_p2 > 0));
+ 	counts_p4 = p4.genomes.countOfMutationsOfType(m2);
+ 	freq_p4 = mean(asInteger(counts_p4 > 0));
+ 	counts_p5 = p5.genomes.countOfMutationsOfType(m2);
+ 	freq_p5 = mean(asInteger(counts_p5 > 0));
+ 	
+ 	cat(sim.generation + "\n" + freq_p0 + "=freq_bonobo\n" + freq_p1 + "=freq_central\n" + freq_p2 + "=freq_eastern\n" + freq_p4 + "=freq_nigeria\n"+ freq_p5 + "=freq_western\n");
+
+	sim_out_file=outdir+"slimoutput_gen19305_selection_" + simID + "_" + selcoeff+ ".trees";
+    sim.treeSeqOutput(sim_out_file); 
+    sim.simulationFinished();
+}
