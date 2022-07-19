@@ -1,1 +1,22 @@
 Scripts
+
+# Neutral simulations
+- chimp_neutralevolution_runscript.sh
+# simulation under neutral evolution
+# run msprime to generate coalescent history - calls 
+- pan_demography_truncated_before_chimp_split.py
+# take msprime output & input into slim - calls script
+- final_slim_pandemog_neutralevolution.txt
+# take slim output input into msprime - add mutations, downsample & output input for 3P-CLR, calls -
+- SLiM.TreeSeq_to_3pclr.input.py
+
+# Positive selection simulations
+- simulation.runscript.correct.s.sh
+# simulation with positive selection
+# runscript activates python environment
+# run msprime coalescent - calls script
+- pan_demography_truncated_before_chimp_split.py
+# take msprime output & input into slim - calls script
+- updated_pandemog_contextdependentselection.txt
+# take slim output input into msprime - add mutations, downsample & output input for 3P-CLR, calls -
+- SLiM.TreeSeq_to_3pclr.input.py
