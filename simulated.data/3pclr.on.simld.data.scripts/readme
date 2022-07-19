@@ -15,3 +15,8 @@ for i in m_polymorphic_subset_nc_3pclroutput_*.txt; do \
 	value=$(<test_$i); \
 	awk -v site="$value" '$2==site' $i > /SAN/ugi/chimp_internalbranches/test_data/selcoeff_final_1000reps/mutations_out/subset_nc/genpos_morgans/3pclr_output/windows/window_$i; \
 	done
+
+
+# eg rep, output of central window - 
+head window_m_polymorphic_subset_nc_3pclroutput_885_0.1.txt
+23 	600616	0.00576591	471169	730863	0.00452322	0.00701628	337.217	0.01	119.356	0.01	53.0551	0.01	497.621	0.1	242.049	0.01
