@@ -20,3 +20,4 @@ for i in m_polymorphic_subset_nc_3pclroutput_*.txt; do \
 # eg rep, output of central window - 
 head window_m_polymorphic_subset_nc_3pclroutput_885_0.1.txt
 23 	600616	0.00576591	471169	730863	0.00452322	0.00701628	337.217	0.01	119.356	0.01	53.0551	0.01	497.621	0.1	242.049	0.01
+# cols correspond to: #Chr PhysPos	GenPos	PhysStart PhysEnd	GenStart	GenEnd	3PCLR.Anc	3PCLR.Anc.S	3PCLR.A	3PCLR.A.S	3PCLR.B	3PCLR.B.S	XPCLRAC	XPCLRAC.S	XPCLRBC	XPCLRBC.S
