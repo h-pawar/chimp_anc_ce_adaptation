@@ -33,4 +33,4 @@ NB: some files are tracked with git lfs:
 
 #-------------------------------------------------------------------------------------------------------------------
 
-Note - JMS extended 3P-CLR code to allow the method to analyse 5kb segments of each chromosome - available in https://github.com/joshuamschmidt/3P-CLR 
+Note - JMS extended the 3P-CLR code to allow the method to analyse 5kb segments of each chromosome - available in https://github.com/joshuamschmidt/3P-CLR 
