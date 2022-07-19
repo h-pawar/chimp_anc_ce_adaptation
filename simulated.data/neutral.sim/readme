@@ -4,3 +4,7 @@ For one neutral rep - files of pre & post 3P-CLR & of central window
 m_polymorphic_subset_nc_3pclrinput_1001.txt
 m_polymorphic_subset_nc_3pclroutput_1001.txt
 window_m_polymorphic_subset_nc_3pclroutput_1001.txt
+
+
+- 1000neutralreps.central.windows.txt
+# all central windows for the 1000 neutral reps simulated
