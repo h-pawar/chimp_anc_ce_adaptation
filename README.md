@@ -25,6 +25,7 @@ chimp_anc_ce_adaptation/data/functional.annotation/ : to generate Fig S14 & S15
 #-------------------------------------------------------------------------------------------------------------------
 
 chimp_anc_ce_adaptation/data/set_perm/ : set_perm files
+chimp_anc_ce_adaptation/simulated.data/simulation.scripts/ : simulation scripts
 
 #-------------------------------------------------------------------------------------------------------------------
 
