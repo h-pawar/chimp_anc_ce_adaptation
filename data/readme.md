@@ -2,7 +2,7 @@
 
 - runthreepclr_genomicdata_split.sh
 
--- script to run 3P-CLR source code extended by JS, available at https://github.com/joshuamschmidt/3P-CLR
+-- script to run 3P-CLR source code extended by JMS, available at https://github.com/joshuamschmidt/3P-CLR
 
 ### Data
 
