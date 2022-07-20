@@ -38,5 +38,6 @@ NB: some files are tracked with git lfs:
 Note - JMS extended the 3P-CLR code to allow the method to analyse 5kb segments of each chromosome - available in https://github.com/joshuamschmidt/3P-CLR 
 
 #-------------------------------------------------------------------------------------------------------------------
+
 Note the set_perm method developed by JMS to extend the functionality of gowinda is available at https://github.com/joshuamschmidt/set_perm
 Also see this directory for data of figures in S2_appendix.docx
