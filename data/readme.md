@@ -26,7 +26,9 @@ ggplot(fulldist, aes(x=V3)) +  geom_histogram() +  labs(x="3P-CLR score", y = "F
  ```
 
 #head of file
+
 #15	6.18136e+07	693.253
+
 #12	1.10856e+08	679.884
 
 - noheader_aligned_3pclr_out_genome_wide_*percentsubset.txt
