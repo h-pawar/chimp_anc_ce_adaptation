@@ -1,7 +1,7 @@
 ### Script
 
 - runthreepclr_genomicdata_split.sh
-#script to run 3P-CLR source code extended by JS 
+--script to run 3P-CLR source code extended by JS 
 
 ### Data
 
