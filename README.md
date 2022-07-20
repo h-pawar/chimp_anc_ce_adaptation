@@ -1,4 +1,4 @@
-# chimp_anc_ce_adaptation
+## chimp_anc_ce_adaptation
 
 ## Genetic adaptations to SIV across chimpanzee populations
 
