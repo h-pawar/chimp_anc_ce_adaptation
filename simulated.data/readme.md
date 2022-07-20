@@ -1,4 +1,4 @@
-## Data
+# Data
 
 - final_all_neutralruns_nc_withheader_all7elements.txt
  input data to calculate F3 drift times for simulated data under neutrality
@@ -19,7 +19,7 @@ equivalent format but for selection coefficient s=0.05
 code to generate ROC
 
 
-## Code to generate Figure S11: Distribution of 3P-CLR scores for data simulated under neutrality (A) and positive selection with selection coefficients of 0.05 (B) and 0.1 (C), 1000 replicates were generated in each case.
+# Code to generate Figure S11: Distribution of 3P-CLR scores for data simulated under neutrality (A) and positive selection with selection coefficients of 0.05 (B) and 0.1 (C), 1000 replicates were generated in each case.
 
 ```
 sim_0.1<-fread("merged.neutral.s0.1.likelihoodscores.1000runs.txt")
