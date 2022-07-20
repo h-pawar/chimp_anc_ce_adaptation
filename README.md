@@ -1,6 +1,6 @@
 # chimp_anc_ce_adaptation
 
-Genetic adaptations to SIV across chimpanzee populations
+##Genetic adaptations to SIV across chimpanzee populations
 
 Harvinder Pawar, Harrison J. Ostridge, Joshua M. Schmidt, Aida M. Andrés
 
