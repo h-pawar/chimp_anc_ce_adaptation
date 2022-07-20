@@ -40,4 +40,5 @@ Note - JMS extended the 3P-CLR code to allow the method to analyse 5kb segments 
 #-------------------------------------------------------------------------------------------------------------------
 
 Note the set_perm method developed by JMS to extend the functionality of gowinda is available at https://github.com/joshuamschmidt/set_perm
-Also see this directory for data of figures in S2_appendix.docx
+
+Also see this directory for data of figures in S2_appendix.docx, as well as the path: chimp_anc_ce_adaptation/data/set_perm/
