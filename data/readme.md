@@ -25,9 +25,9 @@ fulldist<-fread("3pclr.scores.genomewide.chr.snpposition.1.txt")
 ggplot(fulldist, aes(x=V3)) +  geom_histogram() +  labs(x="3P-CLR score", y = "Frequency") + theme_classic() + theme(text = element_text(size = 15))  + theme(axis.title = element_text(size = 15)) + geom_vline(xintercept = quantile(fulldist$V3, probs = c(0.995))) + geom_vline(xintercept = quantile(fulldist$V3, probs = c(0.999))) + geom_vline(xintercept = quantile(fulldist$V3, probs = c(0.9995)))
  ```
 
-head of file
-15	6.18136e+07	693.253
-12	1.10856e+08	679.884
+#head of file
+#15	6.18136e+07	693.253
+#12	1.10856e+08	679.884
 
 - noheader_aligned_3pclr_out_genome_wide_*percentsubset.txt
 
