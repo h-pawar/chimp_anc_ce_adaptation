@@ -1,15 +1,21 @@
 ### Script
 
 - runthreepclr_genomicdata_split.sh
+
 -- script to run 3P-CLR source code extended by JS 
 
 ### Data
 
 - 3pclr.scores.genomewide.chr.snpposition.1.txt
+
 -- output of 3P-CLR on chimpanzee data - filtered to 3 columns
+
 -- contains 3 columns: chromosome position 3P-CLR score
+
 -- where position = physical position of the central SNP of the window
+
 -- note this file contains 3P-CLR scores genome-wide (for all windows for which the statistic was calculated)
+
 -- file used to plot Figure S12: Empirical distribution of 3P-CLR scores
   
 To plot in R: 
