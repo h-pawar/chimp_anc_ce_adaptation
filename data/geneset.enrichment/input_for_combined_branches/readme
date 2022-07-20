@@ -5,3 +5,5 @@ Data
 # A+C internal.central.min.p.tail.midpoint.length.corrected.uniq.txt
 # A+E internal.eastern.min.p.tail.midpoint.length.corrected.uniq.txt
 # A+C+E internal.central.eastern.min.p.tail.midpoint.length.corrected.uniq.txt
+
+Note for testing enrichment on combined candidates from different branches we used gowinda & a novel method set_perm developed by JMS & available at https://github.com/joshuamschmidt/set_perm
