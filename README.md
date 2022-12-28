@@ -4,6 +4,8 @@
 
 Harvinder Pawar, Harrison J. Ostridge, Joshua M. Schmidt, Aida M. Andrés
 
+https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1010337
+
 https://www.biorxiv.org/content/10.1101/2022.05.24.491624v2
 
 #-------------------------------------------------------------------------------------------------------------------
